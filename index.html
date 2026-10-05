@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+<link rel="dns-prefetch" href="https://images.unsplash.com">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title id="pageTitle">Lumière • Amaya & Dhanuka Wedding Invitation</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -8498,6 +8500,56 @@ body.main-reveal #premiumRainLayer {
   }
 </style>
 
+
+<style id="lumiere-uhd-guest-sync-fix">
+/* Final device-scale sharpness pass. Keeps the existing visual dimensions/layout. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+img, video, canvas, svg {
+  image-rendering: auto;
+  -ms-interpolation-mode: bicubic;
+}
+#momentsGalleryGrid .moment-card img,
+#momentsGalleryGrid .moment-slide {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  image-rendering: auto !important;
+  filter: none !important;
+  transform: none !important;
+  backface-visibility: visible !important;
+}
+/* Guest/invitor links are presentation-only. RSVP remains the only editable card. */
+body.lumiere-guest-mode #hostControlsContainer,
+body.lumiere-guest-mode #customizerPanel,
+body.lumiere-guest-mode #guestModal {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+body.lumiere-guest-mode #rsvpSection,
+body.lumiere-guest-mode #rsvpSection * {
+  pointer-events: auto;
+}
+/* Prevent accidental appearance caused by later reveal/animation rules. */
+body.lumiere-guest-mode.main-reveal #hostControlsContainer,
+body.lumiere-guest-mode.invitation-locked #hostControlsContainer {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+@media (min-resolution: 2dppx) {
+  body { text-rendering: geometricPrecision; }
+}
+</style>
+
 </head>
 <body class="invitation-locked bg-[#FAF8F5] text-tropicalText antialiased selection:bg-customDarkRed selection:text-white">
     <div id="premiumRainLayer" aria-hidden="true">
@@ -8785,7 +8837,7 @@ body.main-reveal #premiumRainLayer {
                         src="https://raw.githubusercontent.com/lumierecompany07/backpotos/main/national2.png"
                         alt="Wedding decorative artwork"
                         class="mt-3 w-[60%] max-w-[260px] h-auto object-contain mx-auto drop-shadow-lg"
-                        loading="eager"
+                        loading="eager" decoding="async" fetchpriority="high"
                     >
                 </div>
             </div>
@@ -9015,7 +9067,7 @@ body.main-reveal #premiumRainLayer {
 <div id="lightboxModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4" onclick="closeLightbox()">
         <div class="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center" onclick="event.stopPropagation()">
             <button onclick="closeLightbox()" class="absolute -top-10 right-0 text-white text-2xl font-bold p-2 cursor-pointer">×</button>
-            <img id="lightboxImg" src="" alt="Zoomed Photo" class="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl kandyan-border animate-fade-scale">
+            <img id="lightboxImg" alt="Zoomed Photo" class="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl kandyan-border animate-fade-scale">
         </div>
     </div>
 
@@ -9217,15 +9269,169 @@ body.main-reveal #premiumRainLayer {
         // Floating particles disabled for smoother performance.
         // Default itinerary is rendered after DEFAULT_ITINERARY is initialized below.
 
+        // =========================================================
+        // LUMIÈRE GUEST LINK SNAPSHOT + INVITOR MODE LOCK
+        // Carries the exact current invitation data with the personalized link.
+        // The snapshot is stored in the URL fragment so the hosting server never
+        // needs to parse the payload and the same HTML file can reproduce it.
+        // =========================================================
+        let lumiereGuestMode = false;
+        let lumiereGuestName = '';
+
+        function isLumiereGuestMode() {
+            if (lumiereGuestMode) return true;
+            try { return new URLSearchParams(window.location.search).has('to'); }
+            catch (_) { return false; }
+        }
+
+        function setGuestNameEverywhere(name) {
+            const clean = String(name || '').trim();
+            if (!clean) return;
+            lumiereGuestName = clean;
+            ['introGuestName', 'dynamicGuestName'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = clean;
+            });
+            const rsvpNameInput = document.getElementById('rsvpGuestNameInput');
+            if (rsvpNameInput && !rsvpNameInput.value.trim()) rsvpNameInput.value = clean;
+        }
+
+        function activateLumiereGuestMode(name) {
+            lumiereGuestMode = true;
+            document.body.classList.add('lumiere-guest-mode');
+            setGuestNameEverywhere(name);
+
+            const controls = document.getElementById('hostControlsContainer');
+            if (controls) {
+                controls.hidden = true;
+                controls.style.setProperty('display', 'none', 'important');
+                controls.setAttribute('aria-hidden', 'true');
+            }
+            const panel = document.getElementById('customizerPanel');
+            if (panel) {
+                panel.classList.add('translate-x-full');
+                panel.setAttribute('aria-hidden', 'true');
+            }
+            const modal = document.getElementById('guestModal');
+            if (modal) {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                modal.setAttribute('aria-hidden', 'true');
+            }
+
+            // Even if a future CSS rule exposes the panel, all non-RSVP editing stays disabled.
+            document.querySelectorAll('#customizerPanel input, #customizerPanel textarea, #customizerPanel select, #customizerPanel button, #guestModal input, #guestModal button')
+                .forEach(el => { try { el.disabled = true; } catch (_) {} });
+        }
+
+        function bytesToBase64Url(bytes) {
+            let binary = '';
+            const chunk = 0x8000;
+            for (let i = 0; i < bytes.length; i += chunk) {
+                binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
+            }
+            return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+        }
+
+        function base64UrlToBytes(value) {
+            const normalized = String(value || '').replace(/-/g, '+').replace(/_/g, '/');
+            const padded = normalized + '='.repeat((4 - normalized.length % 4) % 4);
+            const binary = atob(padded);
+            const out = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) out[i] = binary.charCodeAt(i);
+            return out;
+        }
+
+        async function encodeInvitationSnapshot(snapshot) {
+            const json = JSON.stringify(snapshot);
+            const raw = new TextEncoder().encode(json);
+            if ('CompressionStream' in window) {
+                try {
+                    const stream = new Blob([raw]).stream().pipeThrough(new CompressionStream('gzip'));
+                    const compressed = new Uint8Array(await new Response(stream).arrayBuffer());
+                    return 'g.' + bytesToBase64Url(compressed);
+                } catch (_) {}
+            }
+            return 'j.' + bytesToBase64Url(raw);
+        }
+
+        async function decodeInvitationSnapshot(token) {
+            const value = String(token || '');
+            if (!value) return null;
+            const splitAt = value.indexOf('.');
+            const mode = splitAt > -1 ? value.slice(0, splitAt) : 'j';
+            const body = splitAt > -1 ? value.slice(splitAt + 1) : value;
+            let bytes = base64UrlToBytes(body);
+            if (mode === 'g' && 'DecompressionStream' in window) {
+                const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+                bytes = new Uint8Array(await new Response(stream).arrayBuffer());
+            }
+            return JSON.parse(new TextDecoder().decode(bytes));
+        }
+
+        function getCurrentBioText() {
+            return (document.getElementById('displayBio')?.textContent || '').trim();
+        }
+
+        function captureInvitationSnapshot() {
+            let data = {};
+            try {
+                data = typeof getTemplateVariablePayload === 'function'
+                    ? getTemplateVariablePayload()
+                    : JSON.parse(JSON.stringify(templateVariables || {}));
+            } catch (_) {}
+
+            // Preserve the 5-slot / up-to-3-images-per-slot gallery structure when it exists.
+            if (Array.isArray(templateVariables?.gallerySlots)) {
+                data.gallerySlots = templateVariables.gallerySlots.map(slot => Array.isArray(slot) ? [...slot] : []);
+            }
+            const bio = getCurrentBioText();
+            if (bio) data.bio = bio;
+
+            return {
+                version: 2,
+                savedAt: Date.now(),
+                data
+            };
+        }
+
+        function getSnapshotTokenFromUrl() {
+            try {
+                const hashParams = new URLSearchParams((window.location.hash || '').replace(/^#/, ''));
+                return hashParams.get('ls') || '';
+            } catch (_) { return ''; }
+        }
+
+        async function restoreInvitationSnapshotFromUrl() {
+            const token = getSnapshotTokenFromUrl();
+            if (!token) return false;
+            try {
+                const snapshot = await decodeInvitationSnapshot(token);
+                const data = snapshot?.data && typeof snapshot.data === 'object' ? snapshot.data : snapshot;
+                if (!data || typeof data !== 'object') return false;
+                if (lumiereGuestName) data.guest = lumiereGuestName;
+                data.hideHostControls = true;
+                if (typeof applyLiveDataFromDashboard === 'function') applyLiveDataFromDashboard(data);
+                setGuestNameEverywhere(lumiereGuestName || data.guest || '');
+                return true;
+            } catch (error) {
+                console.warn('Lumière guest snapshot could not be restored:', error);
+                return false;
+            }
+        }
+
         function toggleCustomizer() {
+            if (isLumiereGuestMode()) return;
             const panel = document.getElementById('customizerPanel');
             if (!panel) return;
             const opening = panel.classList.contains('translate-x-full');
             if (opening && typeof syncCustomizerFromVariables === 'function') syncCustomizerFromVariables();
             panel.classList.toggle('translate-x-full');
+            if(opening)panel.querySelectorAll('img[data-src]').forEach(img=>{img.src=img.dataset.src;img.removeAttribute('data-src')});
         }
 
         function openGuestModal() {
+            if (isLumiereGuestMode()) return;
             document.getElementById('guestModal').classList.remove('hidden');
             document.getElementById('guestModal').classList.add('flex');
         }
@@ -9235,37 +9441,72 @@ body.main-reveal #premiumRainLayer {
             document.getElementById('guestModal').classList.add('hidden');
         }
 
-        function generateGuestLink() {
+        async function generateGuestLink() {
+            if (isLumiereGuestMode()) return;
             const name = document.getElementById('guestNameInput').value.trim();
-            if(!name) return;
-            const baseUrl = window.location.href.split('?')[0];
-            const link = `${baseUrl}?to=${encodeURIComponent(name)}`;
-            document.getElementById('generatedLinkOutput').value = link;
-            document.getElementById('resultContainer').classList.remove('hidden');
-        }
+            if (!name) return;
 
-        function copyGuestLink() {
-            const copyText = document.getElementById('generatedLinkOutput');
-            copyText.select();
-            document.execCommand('copy');
-            const msg = document.getElementById('copySuccessMsg');
-            msg.classList.remove('hidden');
-            setTimeout(() => msg.classList.add('hidden'), 2000);
-        }
-
-        // Parse URL params on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const guest = params.get('to');
-            if(guest) {
-                const decodedGuest = decodeURIComponent(guest);
-                document.getElementById('introGuestName').innerText = decodedGuest;
-                document.getElementById('dynamicGuestName').innerText = decodedGuest;
-                const rsvpNameInput = document.getElementById('rsvpGuestNameInput');
-                if (rsvpNameInput) rsvpNameInput.value = decodedGuest;
-                const hc = document.getElementById('hostControlsContainer');
-                if (hc) hc.style.display = 'none';
+            const button = document.getElementById('generateLinkBtn');
+            const oldLabel = button ? button.innerHTML : '';
+            if (button) {
+                button.disabled = true;
+                button.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Preparing Link';
             }
+            try {
+                // Ensure any currently visible customizer values are reflected before snapshotting.
+                if (typeof applyWeddingDetailsFromCustomizer === 'function' && !isLumiereGuestMode()) {
+                    applyWeddingDetailsFromCustomizer();
+                }
+                const snapshot = captureInvitationSnapshot();
+                const token = await encodeInvitationSnapshot(snapshot);
+                const url = new URL(window.location.href);
+                url.search = '';
+                url.hash = '';
+                url.searchParams.set('to', name);
+                url.searchParams.set('guest', '1');
+                url.hash = new URLSearchParams({ ls: token }).toString();
+                document.getElementById('generatedLinkOutput').value = url.toString();
+                document.getElementById('resultContainer').classList.remove('hidden');
+            } catch (error) {
+                console.error('Could not generate Lumière guest link:', error);
+            } finally {
+                if (button) {
+                    button.disabled = false;
+                    button.innerHTML = oldLabel || 'Generate Link';
+                }
+            }
+        }
+
+        async function copyGuestLink() {
+            const copyText = document.getElementById('generatedLinkOutput');
+            if (!copyText || !copyText.value) return;
+            try {
+                if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(copyText.value);
+                else {
+                    copyText.select();
+                    document.execCommand('copy');
+                }
+                const msg = document.getElementById('copySuccessMsg');
+                if (msg) {
+                    msg.classList.remove('hidden');
+                    setTimeout(() => msg.classList.add('hidden'), 2000);
+                }
+            } catch (_) {
+                copyText.select();
+                try { document.execCommand('copy'); } catch (_) {}
+            }
+        }
+
+        // Parse personalized guest mode + restore the exact shared invitation snapshot.
+        window.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const guest = (params.get('to') || '').trim();
+            if (guest) activateLumiereGuestMode(guest);
+            if (guest) await restoreInvitationSnapshotFromUrl();
+            // Re-assert the name after state hydration so "Honored Family & Friends"
+            // can never overwrite the invitor/guest name on a shared invitation.
+            if (guest) setGuestNameEverywhere(guest);
+
             const rsvpName = document.getElementById('rsvpGuestNameInput');
             if (rsvpName) {
                 rsvpName.addEventListener('input', () => {
@@ -9309,8 +9550,9 @@ body.main-reveal #premiumRainLayer {
             renderRsvpDoneState(status, finalGuestCount, guestName);
             try {
                 window.parent.postMessage({
+                    source: 'lumiere-template',
                     type: 'LUMIERE_RSVP_SUBMIT',
-                    payload: { status, guestCount: finalGuestCount, guestName }
+                    payload: { status, guestCount: finalGuestCount, guestName, invitedAs: lumiereGuestName || guestName }
                 }, '*');
             } catch (e) {}
         }
@@ -9476,6 +9718,9 @@ body.main-reveal #premiumRainLayer {
         window.addEventListener('message', function(event) {
             if (!event.data || event.data.type !== 'LUMIERE_LIVE_UPDATE') return;
             applyLiveDataFromDashboard(event.data.payload || {});
+            if (isLumiereGuestMode()) {
+                activateLumiereGuestMode(lumiereGuestName || new URLSearchParams(window.location.search).get('to') || '');
+            }
         });
 
         // Tell the dashboard iframe is ready. The dashboard may send an initial
@@ -9502,11 +9747,11 @@ body.main-reveal #premiumRainLayer {
         ];
 
         const DEFAULT_GALLERY = [
-            'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80',
-            'https://images.unsplash.com/photo-1610173827002-6138ec31751f?auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80'
+            'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1800&q=92',
+            'https://images.unsplash.com/photo-1610173827002-6138ec31751f?auto=format&fit=crop&w=1800&q=92',
+            'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=92',
+            'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=92',
+            'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1800&q=92'
         ];
 
         let templateVariables = {
@@ -9710,7 +9955,7 @@ body.main-reveal #premiumRainLayer {
                         <button type="button" class="customizer-delete" onclick="deleteGalleryPhoto(${index})"><i class="fa-solid fa-trash"></i> Delete</button>
                     </div>
                     <div class="gallery-editor-row">
-                        <img class="gallery-editor-thumb" src="${escapeHtml(src)}" alt="Photo ${index + 1} preview">
+                        <img class="gallery-editor-thumb" decoding="async" loading="lazy" fetchpriority="low" ${document.getElementById('customizerPanel')?.classList.contains('translate-x-full') ? 'data-src' : 'src'}="${escapeHtml(src)}" alt="Photo ${index + 1} preview">
                         <div>
                             <label class="gallery-file-label"><i class="fa-solid fa-folder-open"></i> Browse / Replace from Device
                                 <input type="file" accept="image/*" class="hidden" onchange="replaceGalleryPhoto(${index}, this.files[0]); this.value=''">
@@ -9757,7 +10002,7 @@ body.main-reveal #premiumRainLayer {
                 const image = new Image();
                 image.onload = () => {
                     try {
-                        const maxSide = 1800;
+                        const maxSide = 2400;
                         const naturalW = image.naturalWidth || image.width;
                         const naturalH = image.naturalHeight || image.height;
                         const scale = Math.min(1, maxSide / Math.max(naturalW, naturalH));
@@ -9772,7 +10017,7 @@ body.main-reveal #premiumRainLayer {
                         ctx.imageSmoothingQuality = 'high';
                         ctx.drawImage(image, 0, 0, width, height);
                         // WebP keeps quality high while reducing large phone-photo payloads.
-                        const optimized = canvas.toDataURL('image/webp', .84);
+                        const optimized = canvas.toDataURL('image/webp', .92);
                         resolve(optimized && optimized.length > 30 ? optimized : original);
                     } catch (err) {
                         resolve(original);
@@ -10002,6 +10247,9 @@ body.main-reveal #premiumRainLayer {
                 seatNumber: templateVariables.seatNumber,
                 story: templateVariables.story.map(item => ({ ...item })),
                 gallery: [...templateVariables.gallery],
+                gallerySlots: Array.isArray(templateVariables.gallerySlots)
+                    ? templateVariables.gallerySlots.map(slot => Array.isArray(slot) ? [...slot] : [])
+                    : null,
                 itinerary: templateVariables.itinerary.map(item => ({ ...item }))
             };
         }
@@ -10096,9 +10344,12 @@ body.main-reveal #premiumRainLayer {
                 const rsvpNameInput = document.getElementById('rsvpGuestNameInput');
                 if (rsvpNameInput && !rsvpNameInput.value) rsvpNameInput.value = data.guest;
             }
-            if (data.hideHostControls) {
+            if (data.hideHostControls || isLumiereGuestMode()) {
                 const hc = document.getElementById('hostControlsContainer');
-                if (hc) hc.style.display = 'none';
+                if (hc) {
+                    hc.hidden = true;
+                    hc.style.setProperty('display', 'none', 'important');
+                }
             }
             if (data.rsvpStatus && data.rsvpStatus !== 'Pending') {
                 renderRsvpDoneState(data.rsvpStatus, data.rsvpGuestCount, data.rsvpGuestName || data.guest || '');
@@ -10116,9 +10367,10 @@ body.main-reveal #premiumRainLayer {
         }
 
         function applyCustomizations() {
+            if (isLumiereGuestMode()) return;
             applyWeddingDetailsFromCustomizer();
             renderLoveStory(templateVariables.story);
-            renderMomentsGallery(templateVariables.gallery);
+            renderMomentsGallery(Array.isArray(templateVariables.gallerySlots) ? templateVariables.gallerySlots : templateVariables.gallery);
             renderItineraryList(templateVariables.itinerary);
             syncCustomizerFromVariables();
 
