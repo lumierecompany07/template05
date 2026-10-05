@@ -2,8 +2,8 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
-    <title id="pageTitle">Lumière • Nethmi & Sanuja Wedding Invitation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title id="pageTitle">Lumière • Amaya & Dhanuka Wedding Invitation</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -4293,7 +4293,7 @@ input:where([type='button'], [type='reset'], [type='submit']),
         .intro-corner.bl { bottom: 25px; left: 25px; transform: scaleY(-1); }
         .intro-corner.br { bottom: 25px; right: 25px; transform: scale(-1); }
 
-        /* Remove outer background behind Nethmi & Sanuja / intro text */
+        /* Remove outer background behind Amaya & Dhanuka / intro text */
         .intro-copy {
             background: transparent !important;
             border: 0 !important;
@@ -7962,6 +7962,542 @@ body.main-reveal #premiumRainLayer {
 }
 </style>
 
+
+<!-- LUMIÈRE: FINAL MOBILE 0.7CM SIDE GAP -->
+<style id="lumiere-final-mobile-07cm-gap">
+  @media (max-width: 640px) {
+    /* Exact 0.7cm visible space on both sides of the main invitation. */
+    #heroSection,
+    main,
+    footer,
+    .save-date-footer {
+      width: calc(100% - 1.4cm) !important;
+      max-width: calc(100% - 1.4cm) !important;
+      margin-left: 0.7cm !important;
+      margin-right: 0.7cm !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Every top-level section card follows the same 0.7cm page boundary. */
+    main > section {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Keep card content comfortably inside each section without creating a second outer gap. */
+    main > section {
+      padding-left: 12px !important;
+      padding-right: 12px !important;
+    }
+
+    /* Hero and footer inner content stay aligned with the section-card edges. */
+    .hero-mobile-text-shift,
+    .save-date-footer .save-date-inner {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      box-sizing: border-box !important;
+    }
+
+    .save-date-footer .save-date-inner {
+      padding-left: 12px !important;
+      padding-right: 12px !important;
+    }
+  }
+</style>
+
+
+<!-- LUMIÈRE: FINAL W10 VIDEO BACKGROUND + CURVED DARK INTRO FRAME -->
+<style id="lumiere-final-w10-video-and-curved-intro">
+  /* Main invitation background: replace the static wedding photo with w10.mp4. */
+  #fixedVideoBackground {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+    background: #090507 !important;
+  }
+
+  #mainBackgroundVideo {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    background: #090507 !important;
+  }
+
+  /* Remove any old static-photo overlay/fallback that could cover the video. */
+  #fixedVideoBackground::before,
+  #fixedVideoBackground::after {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+  }
+
+  /* Intro outer area stays dark. */
+  #introScreen {
+    background: #070305 !important;
+    overflow: hidden !important;
+  }
+
+  /* Put the intro video inside a curved viewport, leaving a dark outer gutter. */
+  #introScreen .wedding-video-intro {
+    inset: clamp(14px, 2.2vw, 24px) !important;
+    width: calc(100% - (clamp(14px, 2.2vw, 24px) * 2)) !important;
+    height: calc(100% - (clamp(14px, 2.2vw, 24px) * 2)) !important;
+    border-radius: clamp(24px, 3vw, 38px) !important;
+    overflow: hidden !important;
+    background: #070305 !important;
+  }
+
+  /* Keep the intro shade clipped to the same curved video area. */
+  #introScreen .intro-video-shade {
+    inset: clamp(14px, 2.2vw, 24px) !important;
+    border-radius: clamp(24px, 3vw, 38px) !important;
+    overflow: hidden !important;
+  }
+
+  /* Premium curved outline around the intro video. */
+  #introScreen::before {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    inset: clamp(14px, 2.2vw, 24px) !important;
+    z-index: 7 !important;
+    pointer-events: none !important;
+    border-radius: clamp(24px, 3vw, 38px) !important;
+    border: 1.5px solid rgba(226, 191, 103, .86) !important;
+    outline: 1px solid rgba(255, 238, 194, .20) !important;
+    outline-offset: -7px !important;
+    background: transparent !important;
+    box-shadow:
+      0 0 0 1px rgba(73, 38, 18, .60),
+      0 0 22px rgba(212, 175, 55, .18),
+      inset 0 0 18px rgba(255, 232, 174, .08) !important;
+  }
+
+  /* Darken only the area OUTSIDE the curved intro frame. */
+  #introScreen::after {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    inset: clamp(14px, 2.2vw, 24px) !important;
+    z-index: 3 !important;
+    pointer-events: none !important;
+    border-radius: clamp(24px, 3vw, 38px) !important;
+    background: transparent !important;
+    box-shadow: 0 0 0 100vmax rgba(5, 2, 4, .88) !important;
+  }
+
+  /* Text stays above the dark outside mask and below the decorative border where appropriate. */
+  #introVideoNames {
+    z-index: 6 !important;
+  }
+
+  #introSkipBtn {
+    z-index: 9 !important;
+  }
+
+  #introUnlockPrompt,
+  #introVideoLoader {
+    z-index: 10 !important;
+  }
+
+  @media (max-width: 768px) {
+    #introScreen .wedding-video-intro,
+    #introScreen .intro-video-shade,
+    #introScreen::before,
+    #introScreen::after {
+      inset: 10px !important;
+      border-radius: 24px !important;
+    }
+
+    #introScreen .wedding-video-intro {
+      width: calc(100% - 20px) !important;
+      height: calc(100% - 20px) !important;
+      object-fit: cover !important;
+    }
+
+    #introScreen::before {
+      outline-offset: -5px !important;
+      border-width: 1.25px !important;
+    }
+  }
+</style>
+
+
+<!-- LUMIÈRE: CALENDAR + SEATING + NO-ZOOM + BOTTOM-RIGHT MUSIC -->
+<style id="lumiere-calendar-seating-nozoom-final">
+  html, body { touch-action: pan-x pan-y; }
+
+  #lightboxModal,
+  #lumiereDetailModal {
+    display: none !important;
+    pointer-events: none !important;
+  }
+  .lumiere-expandable-detail,
+  .lumiere-expandable-detail:hover,
+  .lumiere-expandable-detail:active {
+    cursor: default !important;
+    transform: none !important;
+  }
+  .lumiere-expandable-detail::after {
+    display: none !important;
+    content: none !important;
+  }
+  #momentsGalleryGrid .moment-card,
+  #momentsGalleryGrid .moment-card:hover,
+  #momentsGalleryGrid .moment-card:active,
+  #momentsGalleryGrid .moment-slide,
+  #momentsGalleryGrid .moment-card:hover .moment-slide {
+    cursor: default !important;
+    transform: none !important;
+  }
+
+  #musicControlDock {
+    right: 14px !important;
+    bottom: 18px !important;
+    left: auto !important;
+    top: auto !important;
+    z-index: 46 !important;
+  }
+  #musicDiscIcon { margin: 0 !important; }
+  @media (max-width: 640px) {
+    #musicControlDock {
+      right: max(12px, env(safe-area-inset-right)) !important;
+      bottom: max(68px, calc(env(safe-area-inset-bottom) + 62px)) !important;
+    }
+  }
+
+  .wedding-calendar-section { padding: 4px 12px 12px !important; }
+  .wedding-calendar-card {
+    position: relative;
+    overflow: visible;
+    max-width: 330px;
+    margin: 0 auto;
+    border-radius: 22px;
+    border: 1px solid rgba(212,175,55,.48);
+    background: linear-gradient(180deg, rgba(255,252,246,.96), rgba(250,242,225,.94));
+    box-shadow: 0 16px 38px rgba(76,36,18,.10), inset 0 0 0 1px rgba(255,255,255,.66);
+  }
+  .wedding-calendar-rings {
+    position: absolute;
+    left: 50%;
+    top: -8px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 52px;
+    z-index: 4;
+  }
+  .wedding-calendar-rings span {
+    width: 8px;
+    height: 22px;
+    border: 2px solid #9b691e;
+    border-radius: 999px;
+    background: #f8ecd1;
+    box-shadow: 0 2px 5px rgba(70,35,10,.12);
+  }
+  .wedding-calendar-month {
+    padding: 15px 18px 11px;
+    border-radius: 21px 21px 0 0;
+    background: linear-gradient(135deg, #5C060C 0%, #7d1e20 50%, #4a0509 100%);
+    color: #f6dda0;
+    text-align: center;
+    font: 700 11px/1 'Cinzel', serif;
+    letter-spacing: .30em;
+    text-indent: .30em;
+    border-bottom: 1px solid rgba(212,175,55,.52);
+  }
+  .wedding-calendar-body { padding: 13px 18px 15px; }
+  .wedding-calendar-icon {
+    text-align: center;
+    color: #b07a2a;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .wedding-calendar-date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+  .wedding-calendar-day {
+    font: 700 clamp(3rem, 13vw, 4.1rem)/.9 'Playfair Display', serif;
+    color: #5C060C;
+    letter-spacing: -.05em;
+  }
+  .wedding-calendar-weekday {
+    margin: 0 0 4px;
+    font: 700 10px/1.25 'Cinzel', serif;
+    color: #7A3E12;
+    letter-spacing: .13em;
+  }
+  .wedding-calendar-year {
+    margin: 0;
+    font: 600 12px/1 'Cinzel', serif;
+    color: #a87416;
+    letter-spacing: .20em;
+  }
+  .wedding-calendar-caption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    margin-top: 10px;
+    color: #8a5c20;
+    font: 700 7px/1 'Cinzel', serif;
+    letter-spacing: .18em;
+  }
+  .wedding-calendar-line {
+    width: 34px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(176,122,42,.55));
+  }
+  .wedding-calendar-line:last-child { transform: scaleX(-1); }
+
+  .seating-card-section { padding: 4px 12px 12px !important; }
+  .seating-card {
+    position: relative;
+    max-width: 420px;
+    margin: 0 auto;
+    overflow: hidden;
+    text-align: center;
+    border-radius: 23px;
+    border: 1px solid rgba(212,175,55,.50);
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255,244,207,.72), transparent 42%),
+      linear-gradient(150deg, rgba(255,252,245,.96), rgba(246,232,203,.94));
+    box-shadow: 0 17px 42px rgba(72,32,16,.11), inset 0 0 0 1px rgba(255,255,255,.72);
+    padding: 17px 17px 15px;
+  }
+  .seating-card::before,
+  .seating-card::after {
+    content: '';
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border: 1px solid rgba(176,122,42,.18);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .seating-card::before { left: -38px; top: -38px; }
+  .seating-card::after { right: -38px; bottom: -38px; }
+  .seating-card-topline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    color: #a87416;
+  }
+  .seating-card-topline p {
+    margin: 0;
+    font: 700 8px/1 'Cinzel', serif;
+    letter-spacing: .22em;
+  }
+  .seating-card-topline i { font-size: 8px; }
+  .seating-card h2 {
+    margin: 7px 0 3px;
+    color: #5C060C;
+    font: 700 clamp(1.25rem, 5vw, 1.55rem)/1.15 'Cinzel', serif;
+  }
+  .seating-card-note {
+    max-width: 330px;
+    margin: 0 auto 12px;
+    color: #80613B;
+    font: 500 10px/1.6 'Poppins', sans-serif;
+  }
+  .seating-number-grid {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 10px;
+    align-items: stretch;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 9px 8px;
+    border-top: 1px solid rgba(176,122,42,.20);
+    border-bottom: 1px solid rgba(176,122,42,.20);
+  }
+  .seating-divider {
+    background: linear-gradient(transparent, rgba(176,122,42,.45), transparent);
+  }
+  .seating-number-box {
+    display: grid;
+    gap: 3px;
+    place-items: center;
+  }
+  .seating-number-label {
+    color: #9a6a28;
+    font: 700 7px/1 'Cinzel', serif;
+    letter-spacing: .20em;
+  }
+  .seating-number-box strong {
+    color: #5C060C;
+    font: 700 1.55rem/1 'Playfair Display', serif;
+    min-width: 2ch;
+  }
+  .seating-card-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    margin-top: 10px;
+    color: #85581A;
+    font: 600 8px/1.3 'Cinzel', serif;
+    letter-spacing: .05em;
+  }
+  .seating-card-footer i {
+    color: #a87416;
+    font-size: 7px;
+  }
+  .customizer-helper {
+    margin: 8px 0 0;
+    color: #80613B;
+    font: 500 9px/1.45 'Poppins', sans-serif;
+  }
+
+  @media (max-width: 640px) {
+    .wedding-calendar-section,
+    .seating-card-section {
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+    }
+    .wedding-calendar-card,
+    .seating-card {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+  }
+</style>
+
+
+<style id="lumiere-seating-loading-state">
+  .seating-loading-state {
+    display: grid;
+    place-items: center;
+    gap: 7px;
+    max-width: 320px;
+    margin: 10px auto 2px;
+    padding: 15px 12px;
+    border-top: 1px solid rgba(176,122,42,.20);
+    border-bottom: 1px solid rgba(176,122,42,.20);
+    text-align: center;
+  }
+
+  .seating-loading-spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(176,122,42,.20);
+    border-top-color: #A87416;
+    border-radius: 50%;
+    animation: seatingLoadingSpin .9s linear infinite;
+  }
+
+  .seating-loading-state strong {
+    color: #5C060C;
+    font: 700 12px/1.2 'Cinzel', serif;
+    letter-spacing: .08em;
+  }
+
+  .seating-loading-state small {
+    color: #80613B;
+    font: 500 9px/1.5 'Poppins', sans-serif;
+  }
+
+  @keyframes seatingLoadingSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .seating-loading-spinner {
+      animation: none;
+    }
+  }
+</style>
+
+
+<!-- LUMIÈRE: UNIFORM MAIN SECTION GAPS -->
+<style id="lumiere-uniform-main-section-gaps">
+  /* Keep every top-level invitation section evenly separated. */
+  main > section {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  main > section + section {
+    margin-top: 0.6cm !important;
+  }
+
+  /* Keep the first section comfortably separated from the hero area. */
+  main > section:first-of-type {
+    margin-top: 0.6cm !important;
+  }
+
+  /* Keep the final section separated from the footer as well. */
+  main > section:last-of-type {
+    margin-bottom: 0.6cm !important;
+  }
+
+  @media (max-width: 640px) {
+    main > section + section {
+      margin-top: 0.6cm !important;
+    }
+
+    main > section:first-of-type {
+      margin-top: 0.6cm !important;
+    }
+
+    main > section:last-of-type {
+      margin-bottom: 0.6cm !important;
+    }
+  }
+</style>
+
+
+<!-- LUMIÈRE: MOMENTS TITLE MATCH OTHER MAIN SECTION TITLES -->
+<style id="lumiere-moments-title-match">
+  #momentsSection > .text-center h2 {
+    margin: 4px 0 0 !important;
+    font-family: 'Cinzel', serif !important;
+    font-size: clamp(1.45rem, 6vw, 2rem) !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    color: #5c060c !important;
+    font-style: normal !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+  }
+</style>
+
+
+<style id="lumiere-seating-live-assignment-fix">
+  #seatingAssignedState[hidden],
+  #seatingLoadingState[hidden] {
+    display: none !important;
+  }
+
+  #seatingAssignedState {
+    animation: seatingAssignedReveal .42s cubic-bezier(.22,1,.36,1) both;
+  }
+
+  @keyframes seatingAssignedReveal {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
 </head>
 <body class="invitation-locked bg-[#FAF8F5] text-tropicalText antialiased selection:bg-customDarkRed selection:text-white">
     <div id="premiumRainLayer" aria-hidden="true">
@@ -8006,7 +8542,7 @@ body.main-reveal #premiumRainLayer {
     <div id="fixedVideoBackground" aria-hidden="true">
         <!-- Performance: this video stays paused while the intro is open. -->
         <video id="mainBackgroundVideo" muted loop playsinline preload="metadata">
-            <source src="https://raw.githubusercontent.com/lumierecompany07/BackgroundVideos/main/w7.mp4" type="video/mp4">
+            <source src="https://raw.githubusercontent.com/lumierecompany07/BackgroundVideos/main/w10.mp4" type="video/mp4">
         </video>
     </div>
 
@@ -8015,7 +8551,7 @@ body.main-reveal #premiumRainLayer {
 
     <div id="introScreen" class="fixed inset-0 z-[100]" aria-label="Wedding intro video">
         <video id="introBackgroundVideo" class="wedding-video-intro" playsinline preload="auto" muted>
-            <source src="https://raw.githubusercontent.com/lumierecompany07/introvideos/main/SINHALA.mp4" type="video/mp4">
+            <source src="https://raw.githubusercontent.com/lumierecompany07/introvideos/main/18.mp4" type="video/mp4">
         </video>
 
         <div id="introVideoShade" class="intro-video-shade" aria-hidden="true"></div>
@@ -8026,7 +8562,7 @@ body.main-reveal #premiumRainLayer {
 
         <div id="introVideoNames" class="intro-video-names" aria-live="polite">
             <p class="intro-video-kicker">THE WEDDING OF</p>
-            <h1 id="introNames">Nethmi &amp; Sanuja</h1>
+            <h1 id="introNames">Amaya &amp; Dhanuka</h1>
             <span class="intro-video-line" aria-hidden="true"></span>
         </div>
 
@@ -8052,9 +8588,9 @@ body.main-reveal #premiumRainLayer {
 
     <div id="floatingParticlesContainer" class="fixed inset-0 overflow-hidden pointer-events-none z-[50]"></div>
 
-    <div class="fixed top-3 left-3 sm:top-5 sm:left-5 z-40">
+    <div id="musicControlDock" class="fixed z-40">
         <audio id="bgMusic" preload="auto">
-            <source id="audioSource" src="https://raw.githubusercontent.com/lumierecompany07/Backgroundmusics/main/medum.mp3" type="audio/mp3">
+            <source id="audioSource" src="https://raw.githubusercontent.com/lumierecompany07/Backgroundmusics/main/Thawthisa%20Lowen.mp3" type="audio/mp3">
         </audio>
         <button onclick="toggleMusic()" id="musicDiscIcon" class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#5C060C] text-kandyanLightGold flex items-center justify-center shadow-2xl hover:scale-110 transition duration-300 music-disc-spin music-disc-paused border-2 border-kandyanGold cursor-pointer font-bold" title="Play/Pause Background Music">
             <i id="musicPlayIcon" class="fa-solid fa-play text-xs ml-0.5"></i>
@@ -8108,38 +8644,38 @@ body.main-reveal #premiumRainLayer {
                     <div class="customizer-grid-2">
                         <div>
                             <label class="customizer-label" for="inpBride">Bride Name</label>
-                            <input type="text" id="inpBride" class="customizer-input" value="Nethmi" oninput="applyWeddingDetailsFromCustomizer()">
+                            <input type="text" id="inpBride" class="customizer-input" value="Amaya" oninput="applyWeddingDetailsFromCustomizer()">
                         </div>
                         <div>
                             <label class="customizer-label" for="inpGroom">Groom Name</label>
-                            <input type="text" id="inpGroom" class="customizer-input" value="Sanuja" oninput="applyWeddingDetailsFromCustomizer()">
+                            <input type="text" id="inpGroom" class="customizer-input" value="Dhanuka" oninput="applyWeddingDetailsFromCustomizer()">
                         </div>
                     </div>
                     <div>
                         <label class="customizer-label" for="inpBrideParents">Bride's Parents</label>
-                        <input type="text" id="inpBrideParents" class="customizer-input" value="Mr. & Mrs. Rajapaksha" oninput="applyWeddingDetailsFromCustomizer()">
+                        <input type="text" id="inpBrideParents" class="customizer-input" value="Mr. & Mrs. Perera" oninput="applyWeddingDetailsFromCustomizer()">
                     </div>
                     <div>
                         <label class="customizer-label" for="inpGroomParents">Groom's Parents</label>
-                        <input type="text" id="inpGroomParents" class="customizer-input" value="Mr. & Mrs. Fernando" oninput="applyWeddingDetailsFromCustomizer()">
+                        <input type="text" id="inpGroomParents" class="customizer-input" value="Mr. & Mrs. Jayasinghe" oninput="applyWeddingDetailsFromCustomizer()">
                     </div>
                     <div class="customizer-grid-2">
                         <div>
                             <label class="customizer-label" for="inpDate">Wedding Date</label>
-                            <input type="date" id="inpDate" class="customizer-input" value="2026-12-12" onchange="applyWeddingDetailsFromCustomizer()">
+                            <input type="date" id="inpDate" class="customizer-input" value="2027-02-14" onchange="applyWeddingDetailsFromCustomizer()">
                         </div>
                         <div>
                             <label class="customizer-label" for="inpTime">Wedding Time</label>
-                            <input type="text" id="inpTime" class="customizer-input" value="9:30 AM Auspicious Nekathing" oninput="applyWeddingDetailsFromCustomizer()">
+                            <input type="text" id="inpTime" class="customizer-input" value="10:30 AM" oninput="applyWeddingDetailsFromCustomizer()">
                         </div>
                     </div>
                     <div>
                         <label class="customizer-label" for="inpVenueName">Venue</label>
-                        <input type="text" id="inpVenueName" class="customizer-input" value="The Queens Hotel, Kandy" oninput="applyWeddingDetailsFromCustomizer()">
+                        <input type="text" id="inpVenueName" class="customizer-input" value="The Royal Garden, Kandy" oninput="applyWeddingDetailsFromCustomizer()">
                     </div>
                     <div>
                         <label class="customizer-label" for="inpVenueAddress">Venue Address</label>
-                        <textarea id="inpVenueAddress" class="customizer-textarea" rows="2" oninput="applyWeddingDetailsFromCustomizer()">10 D.S. Senanayake Vidiya, Kandy, Sri Lanka</textarea>
+                        <textarea id="inpVenueAddress" class="customizer-textarea" rows="2" oninput="applyWeddingDetailsFromCustomizer()">Kandy, Sri Lanka</textarea>
                     </div>
                     <div>
                         <label class="customizer-label" for="inpMapLink">Map Link</label>
@@ -8147,6 +8683,25 @@ body.main-reveal #premiumRainLayer {
                     </div>
                 </div>
             </details>
+
+            <details class="customizer-section" open>
+                <summary><span><i class="fa-solid fa-chair mr-2"></i>Guest Seating</span></summary>
+                <div class="customizer-section-body">
+                    <div class="customizer-grid-2">
+                        <div>
+                            <label class="customizer-label" for="inpTableNumber">Table Number</label>
+                            <input type="text" id="inpTableNumber" class="customizer-input" value="" placeholder="e.g. 08" oninput="applyWeddingDetailsFromCustomizer()">
+                        </div>
+                        <div>
+                            <label class="customizer-label" for="inpSeatNumber">Seat Number</label>
+                            <input type="text" id="inpSeatNumber" class="customizer-input" value="" placeholder="e.g. 12" oninput="applyWeddingDetailsFromCustomizer()">
+                        </div>
+                    </div>
+                    <p class="customizer-helper">Displayed on the reserved seating card above RSVP.</p>
+                </div>
+            </details>
+
+
 
             <details class="customizer-section" open>
                 <summary><span><i class="fa-solid fa-book-open mr-2"></i>Our Story</span></summary>
@@ -8206,15 +8761,15 @@ body.main-reveal #premiumRainLayer {
             
             <div class="hero-mobile-text-shift my-auto px-2 w-full max-w-4xl mx-auto space-y-5">
                 <div class="post-intro-anim" style="transition-delay: 0.3s;">
-                    <div class="hero-couple-lineup" id="heroNames" aria-label="Nethmi and Sanuja">
+                    <div class="hero-couple-lineup" id="heroNames" aria-label="Amaya and Dhanuka">
                         <div class="hero-person">
-                            <h1 id="heroBrideName" class="hero-person-name">Nethmi</h1>
+                            <h1 id="heroBrideName" class="hero-person-name">Amaya</h1>
                             <p class="hero-relation-label">Daughter of</p>
                             <p id="heroBrideParents" class="hero-parent-name">Mr. &amp; Mrs. Rajapaksha</p>
                         </div>
                         <div class="hero-ampersand" aria-hidden="true">&amp;</div>
                         <div class="hero-person">
-                            <h1 id="heroGroomName" class="hero-person-name">Sanuja</h1>
+                            <h1 id="heroGroomName" class="hero-person-name">Dhanuka</h1>
                             <p class="hero-relation-label">Son of</p>
                             <p id="heroGroomParents" class="hero-parent-name">Mr. &amp; Mrs. Fernando</p>
                         </div>
@@ -8265,7 +8820,7 @@ body.main-reveal #premiumRainLayer {
         </section>
 
         <!-- VENUE & DATE SECTION -->
-        <section id="venue" data-aos="zoom-in" class="px-3 py-2 sm:px-4 sm:py-3 relative overflow-hidden max-w-xl mx-auto">
+        <section id="venue" data-aos="fade-up" class="px-3 py-2 sm:px-4 sm:py-3 relative overflow-hidden max-w-xl mx-auto">
             <div class="text-center mb-3">
                 <p class="text-[8px] sm:text-[9px] uppercase tracking-[0.24em] text-[#5C060C] font-bold font-cinzel animate-text-shimmer">Ceremony & Reception</p>
                 <h2 class="font-cinzel text-lg sm:text-xl md:text-2xl font-bold text-tropicalText phase-anim-celebration leading-tight">Royal Celebration</h2>
@@ -8281,12 +8836,12 @@ body.main-reveal #premiumRainLayer {
                     <div class="px-2 py-2.5 text-center min-w-0">
                         <i class="fa-regular fa-clock text-[#A87416] text-[11px] mb-1"></i>
                         <span class="text-[7px] sm:text-[8px] uppercase tracking-[0.13em] text-tropicalSubText font-semibold font-cinzel block">Time</span>
-                        <p id="displayTime" class="font-cinzel text-[9px] sm:text-[11px] font-bold text-[#5C060C] leading-snug mt-0.5">9:30 AM Auspicious Nekathing</p>
+                        <p id="displayTime" class="font-cinzel text-[9px] sm:text-[11px] font-bold text-[#5C060C] leading-snug mt-0.5">10:30 AM</p>
                     </div>
                     <div class="px-2 py-2.5 text-center min-w-0">
                         <i class="fa-solid fa-location-dot text-[#A87416] text-[11px] mb-1"></i>
                         <span class="text-[7px] sm:text-[8px] uppercase tracking-[0.13em] text-tropicalSubText font-semibold font-cinzel block">Venue</span>
-                        <p id="displayVenueName" class="font-cinzel text-[9px] sm:text-[11px] font-bold text-[#5C060C] leading-snug mt-0.5">The Queens Hotel, Kandy</p>
+                        <p id="displayVenueName" class="font-cinzel text-[9px] sm:text-[11px] font-bold text-[#5C060C] leading-snug mt-0.5">The Royal Garden, Kandy</p>
                     </div>
                 </div>
 
@@ -8294,7 +8849,7 @@ body.main-reveal #premiumRainLayer {
                     <div class="w-7 h-7 rounded-full border border-kandyanGold/35 flex items-center justify-center shrink-0 text-[#A87416] bg-white/35">
                         <i class="fa-solid fa-map-pin text-[9px]"></i>
                     </div>
-                    <p id="displayVenueAddress" class="text-[9px] sm:text-[10px] font-medium text-tropicalText leading-snug flex-1 text-left">10 D.S. Senanayake Vidiya, Kandy, Sri Lanka</p>
+                    <p id="displayVenueAddress" class="text-[9px] sm:text-[10px] font-medium text-tropicalText leading-snug flex-1 text-left">Kandy, Sri Lanka</p>
                     <div class="shrink-0 flex items-center gap-1.5">
                         <button type="button" onclick="addWeddingToCalendar()" class="venue-action-mini" title="Add wedding to calendar" aria-label="Add wedding to calendar">
                             <i class="fa-regular fa-calendar-plus text-[10px]"></i>
@@ -8306,6 +8861,33 @@ body.main-reveal #premiumRainLayer {
                 </div>
             </div>
         </section>
+
+        <!-- WEDDING DATE CALENDAR CARD -->
+        <section id="weddingCalendarSection" class="wedding-calendar-section max-w-xl mx-auto" aria-label="Wedding date">
+            <div class="wedding-calendar-card">
+                <div class="wedding-calendar-rings" aria-hidden="true"><span></span><span></span></div>
+                <div class="wedding-calendar-month" id="calendarMonth">FEBRUARY</div>
+                <div class="wedding-calendar-body">
+                    <div class="wedding-calendar-icon" aria-hidden="true">
+                        <i class="fa-regular fa-calendar"></i>
+                    </div>
+                    <div class="wedding-calendar-date">
+                        <span id="calendarDay" class="wedding-calendar-day">14</span>
+                        <div>
+                            <p id="calendarWeekday" class="wedding-calendar-weekday">SUNDAY</p>
+                            <p id="calendarYear" class="wedding-calendar-year">2027</p>
+                        </div>
+                    </div>
+                    <div class="wedding-calendar-caption">
+                        <span class="wedding-calendar-line"></span>
+                        <span>OUR WEDDING DAY</span>
+                        <span class="wedding-calendar-line"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
 
         <!-- CREATIVE LOVE CHAPTERS SECTION -->
         <section id="loveStorySection" data-aos="fade-up" class="max-w-xl mx-auto px-3 pt-2 pb-1 creative-story-section">
@@ -8352,12 +8934,44 @@ body.main-reveal #premiumRainLayer {
             <p class="text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-[#5C060C] font-bold mb-1.5 font-cinzel animate-text-shimmer">A Note From Us</p>
             <h2 class="font-cinzel text-lg sm:text-xl font-bold text-tropicalText mb-3 phase-anim-family">Together Forever</h2>
             <p id="displayBio" class="text-tropicalSubText leading-relaxed mb-3 text-xs sm:text-sm max-w-lg mx-auto">
-                Together with their families, Nethmi and Sanuja request the honour of your presence at the celebration of their marriage as they begin their forever surrounded by love, blessings, and cherished memories.
+                Together with their families, Amaya and Dhanuka request the honour of your presence at the celebration of their marriage as they begin their forever surrounded by love, blessings, and cherished memories.
             </p>
             <p id="storyDateText" class="mb-4 text-[#5C060C] font-cinzel text-[11px] sm:text-xs tracking-[0.08em]">Saturday, 12th December 2026</p>
-            <p id="footerNames" class="font-cinzel text-lg sm:text-2xl text-[#5C060C] font-bold inline-block animate-couple-name" style="animation-duration: 4s;">Nethmi & Sanuja</p>
+            <p id="footerNames" class="font-cinzel text-lg sm:text-2xl text-[#5C060C] font-bold inline-block animate-couple-name" style="animation-duration: 4s;">Amaya & Dhanuka</p>
         </section>
         <div class="section-flourish" aria-hidden="true"><span></span></div>
+
+        <!-- RESERVED SEATING CARD -->
+        <section id="seatingCardSection" class="seating-card-section max-w-xl mx-auto" aria-label="Reserved seating">
+            <div class="seating-card">
+                <div class="seating-card-topline">
+                    <span><i class="fa-solid fa-chair" aria-hidden="true"></i></span>
+                    <p>RESERVED FOR YOU</p>
+                    <span><i class="fa-solid fa-chair" aria-hidden="true"></i></span>
+                </div>
+                <h2>Your Seat Awaits</h2>
+                <p class="seating-card-note">Your place has been thoughtfully reserved for our celebration.</p>
+                <div id="seatingLoadingState" class="seating-loading-state" aria-live="polite">
+                    <span class="seating-loading-spinner" aria-hidden="true"></span>
+                    <strong>Still Loading...</strong>
+                    <small>Your table and seat details will appear here once assigned.</small>
+                </div>
+                <div id="seatingAssignedState" class="seating-number-grid" hidden aria-live="polite">
+                    <div class="seating-number-box">
+                        <span class="seating-number-label">TABLE</span>
+                        <strong id="displayTableNumber">—</strong>
+                    </div>
+                    <div class="seating-divider" aria-hidden="true"></div>
+                    <div class="seating-number-box">
+                        <span class="seating-number-label">SEAT</span>
+                        <strong id="displaySeatNumber">—</strong>
+                    </div>
+                </div>
+                <div class="seating-card-footer"><i class="fa-solid fa-heart" aria-hidden="true"></i><span>We saved this place especially for you</span></div>
+            </div>
+        </section>
+
+
 
         <!-- RSVP SECTION -->
         <section id="rsvpSection" data-aos="fade-up" class="p-4 sm:p-6 text-center relative overflow-hidden max-w-xl mx-auto">
@@ -8433,7 +9047,7 @@ body.main-reveal #premiumRainLayer {
         // PERFORMANCE: never decode two full-screen MP4s at the same time.
         const mainBackgroundVideo = document.getElementById('mainBackgroundVideo');
         const introBackgroundVideo = document.getElementById('introBackgroundVideo');
-        const lowPowerDesktop = window.matchMedia('(min-width: 769px)').matches;
+        const lowPowerDesktop = false; // W10 video background requested on desktop and mobile.
 
         if (mainBackgroundVideo) {
             mainBackgroundVideo.pause();
@@ -8663,11 +9277,7 @@ body.main-reveal #premiumRainLayer {
         });
 
         function openLightbox(imgId) {
-            const img = document.getElementById(imgId);
-            if (!img || !img.src) return;
-            document.getElementById('lightboxImg').src = img.src;
-            document.getElementById('lightboxModal').classList.remove('hidden');
-            document.getElementById('lightboxModal').classList.add('flex');
+            return; // Zoom/lightbox intentionally disabled.
         }
 
         function closeLightbox() {
@@ -8900,15 +9510,17 @@ body.main-reveal #premiumRainLayer {
         ];
 
         let templateVariables = {
-            bride: 'Nethmi',
-            brideParents: 'Mr. & Mrs. Rajapaksha',
-            groom: 'Sanuja',
-            groomParents: 'Mr. & Mrs. Fernando',
-            date: '2026-12-12',
-            time: '9:30 AM Auspicious Nekathing',
-            venue: 'The Queens Hotel, Kandy',
-            address: '10 D.S. Senanayake Vidiya, Kandy, Sri Lanka',
+            bride: 'Amaya',
+            brideParents: 'Mr. & Mrs. Perera',
+            groom: 'Dhanuka',
+            groomParents: 'Mr. & Mrs. Jayasinghe',
+            date: '2027-02-14',
+            time: '10:30 AM',
+            venue: 'The Royal Garden, Kandy',
+            address: 'Kandy, Sri Lanka',
             map: 'https://maps.app.goo.gl',
+            tableNumber: '',
+            seatNumber: '',
             story: DEFAULT_STORY.map(item => ({ ...item })),
             gallery: [...DEFAULT_GALLERY],
             itinerary: DEFAULT_ITINERARY.map(item => ({ ...item }))
@@ -9034,8 +9646,8 @@ body.main-reveal #premiumRainLayer {
             }
             if (section) section.classList.remove('hidden');
             grid.innerHTML = slots.map((photos, slotIndex) => `
-                <div data-moment-slot="${slotIndex}" data-aos="${slotIndex === 0 ? 'fade-right' : (slotIndex % 2 ? 'fade-left' : 'fade-up')}" data-aos-delay="${Math.min(slotIndex * 55, 220)}" onclick="openMomentSlotLightbox(${slotIndex})" class="moment-card ${slotIndex === 0 && slots.length > 1 ? 'featured' : ''} shadow-lg hover-card-float kandyan-border-subtle group" style="position:relative;overflow:hidden;">
-                    ${photos.map((src, photoIndex) => `<img loading="lazy" decoding="async" fetchpriority="low" id="gridImg${slotIndex}_${photoIndex}" src="${escapeHtml(src)}" alt="Moments of Love ${slotIndex + 1}.${photoIndex + 1}" class="moment-slide slide-img group-hover:scale-105 transition duration-700 ${photoIndex === 0 ? 'is-active' : ''}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:${photoIndex === 0 ? 1 : 0};transition:opacity .9s ease,transform 1.2s ease;">`).join('')}
+                <div data-moment-slot="${slotIndex}" data-aos="${slotIndex === 0 ? 'fade-right' : (slotIndex % 2 ? 'fade-left' : 'fade-up')}" data-aos-delay="${Math.min(slotIndex * 55, 220)}" class="moment-card ${slotIndex === 0 && slots.length > 1 ? 'featured' : ''} shadow-lg hover-card-float kandyan-border-subtle group" style="position:relative;overflow:hidden;">
+                    ${photos.map((src, photoIndex) => `<img loading="lazy" decoding="async" fetchpriority="low" id="gridImg${slotIndex}_${photoIndex}" src="${escapeHtml(src)}" alt="Moments of Love ${slotIndex + 1}.${photoIndex + 1}" class="moment-slide slide-img transition duration-700 ${photoIndex === 0 ? 'is-active' : ''}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:${photoIndex === 0 ? 1 : 0};transition:opacity .9s ease,transform 1.2s ease;">`).join('')}
                     ${photos.length > 1 ? `<div class="moment-slide-dots" style="position:absolute;left:50%;bottom:9px;transform:translateX(-50%);display:flex;gap:5px;z-index:4;pointer-events:none;">${photos.map((_, i) => `<span data-dot="${i}" style="width:5px;height:5px;border-radius:999px;background:${i === 0 ? 'rgba(255,255,255,.95)' : 'rgba(255,255,255,.45)'};box-shadow:0 1px 5px rgba(0,0,0,.25);"></span>`).join('')}</div>` : ''}
                 </div>
             `).join('');
@@ -9249,6 +9861,54 @@ body.main-reveal #premiumRainLayer {
             renderItineraryEditor();
         }
 
+
+        function updateWeddingDateCalendar(dateValue) {
+            const monthEl = document.getElementById('calendarMonth');
+            const dayEl = document.getElementById('calendarDay');
+            const weekdayEl = document.getElementById('calendarWeekday');
+            const yearEl = document.getElementById('calendarYear');
+            if (!monthEl || !dayEl || !weekdayEl || !yearEl) return;
+
+            const d = new Date(`${dateValue || ''}T00:00:00`);
+            if (isNaN(d.getTime())) {
+                monthEl.textContent = 'WEDDING';
+                dayEl.textContent = '—';
+                weekdayEl.textContent = 'SAVE THE DATE';
+                yearEl.textContent = '';
+                return;
+            }
+
+            monthEl.textContent = d.toLocaleDateString('en-US', { month: 'long' }).toUpperCase();
+            dayEl.textContent = String(d.getDate()).padStart(2, '0');
+            weekdayEl.textContent = d.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
+            yearEl.textContent = String(d.getFullYear());
+        }
+
+        function updateSeatingCard() {
+            const loadingState = document.getElementById('seatingLoadingState');
+            const assignedState = document.getElementById('seatingAssignedState');
+            const tableEl = document.getElementById('displayTableNumber');
+            const seatEl = document.getElementById('displaySeatNumber');
+
+            const tableNumber = String(templateVariables.tableNumber ?? '').trim();
+            const seatNumber = String(templateVariables.seatNumber ?? '').trim();
+            const isAssigned = Boolean(tableNumber && seatNumber);
+
+            if (loadingState) {
+                loadingState.hidden = isAssigned;
+                loadingState.style.display = isAssigned ? 'none' : 'grid';
+            }
+
+            if (assignedState) {
+                assignedState.hidden = !isAssigned;
+                assignedState.style.display = isAssigned ? 'grid' : 'none';
+            }
+
+            if (tableEl) tableEl.textContent = tableNumber || '—';
+            if (seatEl) seatEl.textContent = seatNumber || '—';
+        }
+
+
         function applyWeddingDetailsFromCustomizer() {
             const getValue = id => document.getElementById(id)?.value ?? '';
             templateVariables.bride = getValue('inpBride');
@@ -9260,6 +9920,8 @@ body.main-reveal #premiumRainLayer {
             templateVariables.venue = getValue('inpVenueName');
             templateVariables.address = getValue('inpVenueAddress');
             templateVariables.map = getValue('inpMapLink');
+            templateVariables.tableNumber = getValue('inpTableNumber');
+            templateVariables.seatNumber = getValue('inpSeatNumber');
 
             const bride = templateVariables.bride;
             const groom = templateVariables.groom;
@@ -9300,6 +9962,8 @@ body.main-reveal #premiumRainLayer {
                 }
                 updateCountdownTarget(templateVariables.date, templateVariables.time);
             }
+            updateWeddingDateCalendar(templateVariables.date);
+            updateSeatingCard();
         }
 
         function syncCustomizerFromVariables() {
@@ -9316,6 +9980,8 @@ body.main-reveal #premiumRainLayer {
             setValue('inpVenueName', templateVariables.venue);
             setValue('inpVenueAddress', templateVariables.address);
             setValue('inpMapLink', templateVariables.map);
+            setValue('inpTableNumber', templateVariables.tableNumber);
+            setValue('inpSeatNumber', templateVariables.seatNumber);
             renderStoryEditor();
             renderGalleryEditor();
             renderItineraryEditor();
@@ -9332,6 +9998,8 @@ body.main-reveal #premiumRainLayer {
                 venue: templateVariables.venue,
                 address: templateVariables.address,
                 map: templateVariables.map,
+                tableNumber: templateVariables.tableNumber,
+                seatNumber: templateVariables.seatNumber,
                 story: templateVariables.story.map(item => ({ ...item })),
                 gallery: [...templateVariables.gallery],
                 itinerary: templateVariables.itinerary.map(item => ({ ...item }))
@@ -9398,6 +10066,8 @@ body.main-reveal #premiumRainLayer {
             if (data.venue !== undefined) templateVariables.venue = data.venue;
             if (data.address !== undefined) templateVariables.address = data.address;
             if (data.map !== undefined) templateVariables.map = data.map;
+            if (data.tableNumber !== undefined || data.table !== undefined) templateVariables.tableNumber = data.tableNumber ?? data.table;
+            if (data.seatNumber !== undefined || data.seat !== undefined) templateVariables.seatNumber = data.seatNumber ?? data.seat;
 
             if (Array.isArray(data.story)) templateVariables.story = data.story.map(item => ({ ...item }));
             else if (Array.isArray(data.ourStory)) templateVariables.story = data.ourStory.map(item => ({ ...item }));
@@ -9436,8 +10106,8 @@ body.main-reveal #premiumRainLayer {
         }
 
         function applyWeddingDetailsToPageFromState() {
-            const ids = ['inpBride','inpBrideParents','inpGroom','inpGroomParents','inpDate','inpTime','inpVenueName','inpVenueAddress','inpMapLink'];
-            const vals = [templateVariables.bride,templateVariables.brideParents,templateVariables.groom,templateVariables.groomParents,templateVariables.date,templateVariables.time,templateVariables.venue,templateVariables.address,templateVariables.map];
+            const ids = ['inpBride','inpBrideParents','inpGroom','inpGroomParents','inpDate','inpTime','inpVenueName','inpVenueAddress','inpMapLink','inpTableNumber','inpSeatNumber'];
+            const vals = [templateVariables.bride,templateVariables.brideParents,templateVariables.groom,templateVariables.groomParents,templateVariables.date,templateVariables.time,templateVariables.venue,templateVariables.address,templateVariables.map,templateVariables.tableNumber,templateVariables.seatNumber];
             ids.forEach((id, index) => {
                 const el = document.getElementById(id);
                 if (el) el.value = vals[index] ?? '';
@@ -9919,7 +10589,7 @@ body.main-reveal #premiumRainLayer {
 
   function refreshEnhancements(root = document) {
     decorateMotion(root);
-    decorateExpandableDetails(root);
+    // Tap/click detail zoom intentionally disabled.
   }
 
   buildHeartRain();
@@ -10076,6 +10746,16 @@ body.main-reveal #premiumRainLayer {
         bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
     });
 })();
+</script>
+
+
+<script id="lumiere-calendar-seating-init">
+document.addEventListener('DOMContentLoaded', function () {
+  try {
+    if (typeof updateWeddingDateCalendar === 'function') updateWeddingDateCalendar(templateVariables.date);
+    if (typeof updateSeatingCard === 'function') updateSeatingCard();
+  } catch (_) {}
+});
 </script>
 
 </body>
